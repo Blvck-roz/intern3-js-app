@@ -1,0 +1,19 @@
+{
+  "name": "intern3-js-app",
+  "version": "1.0.0",
+  "description": "A simple JavaScript application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blvck-roz/intern3-js-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Blvck-roz/intern3-js-app/issues"
+  },
+  "homepage": "https://github.com/Blvck-roz/intern3-js-app#readme"
+}
