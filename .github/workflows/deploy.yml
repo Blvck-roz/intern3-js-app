@@ -30,7 +30,6 @@ jobs:
         SERVER: ${{ secrets.SERVER }}
         USERNAME: ${{ secrets.USERNAME }}
       run: |
-        echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
-        ssh -o StrictHostKeyChecking=no $USERNAME@$SERVER "mkdir -p ~/my-js-app"
-        scp -r ./* $USERNAME@$SERVER:~/my-js-app
-        ssh $USERNAME@$SERVER "cd ~/my-js-app && npm install --production && pm2 restart all"
+        ssh $USERNAME@$SERVER "mkdir -p ~/intern3-js-app"
+        scp -r ./* $USERNAME@$SERVER:~/intern3-js-app
+        ssh $USERNAME@$SERVER "cd ~/intern3-js-app && npm install --production && pm2 restart all"
