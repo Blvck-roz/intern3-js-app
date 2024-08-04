@@ -24,6 +24,21 @@ jobs:
     - name: Build the application
       run: npm run build
 
+    - name: Print environment variables
+      run: env
+
+    - name: Test network connectivity
+      run: |
+        echo "Testing network connectivity to the server"
+        ping -c 4 ${{ secrets.SERVER }}
+        nc -zv ${{ secrets.SERVER }} 22
+
+    - name: Start SSH agent and add key
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+
     - name: Deploy to server
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
