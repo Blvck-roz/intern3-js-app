@@ -1,4 +1,4 @@
-name: Deploy JavaScript Application
+name: Build and Push Docker image
 
 on:
   push:
@@ -13,31 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build the application
-      run: npm run build
-
     - name: Log in to Docker Hub
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker image
       run: docker build -t blvkroz/intern3-js-app:latest .
 
-    - name: Push Docker image to Docker Hub
+    - name: Push Docker image
       run: docker push blvkroz/intern3-js-app:latest
 
-    - name: Deploy to server
-      run: |
-        docker pull blvkroz/intern3-js-app:latest
-        docker run -p 8081:8080 blvkroz/intern3-js-app:latest
 
