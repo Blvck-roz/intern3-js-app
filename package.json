@@ -4,8 +4,9 @@
   "description": "A simple JavaScript application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo 'Building the application...'"
+    "start": "node index.js",
+    "build": "echo 'Building the application...'",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
