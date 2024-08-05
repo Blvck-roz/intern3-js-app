@@ -1,0 +1,31 @@
+name: Build and Deploy Node.js Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to DockerHub
+      run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+      env:
+        DOCKER_USERNAME: Blvkroz
+        DOCKER_PASSWORD: i9f2i#9wJsCZT#P
+
+    - name: Build and push Docker image
+      run: |
+        docker build -t intern3-js-app:latest .
+        docker tag my-js-app:latest $DOCKER_USERNAME/intern3-js-app:latest
+        docker push $DOCKER_USERNAME/my-js-app:latest
+      env:
+        DOCKER_USERNAME: Blvkroz
