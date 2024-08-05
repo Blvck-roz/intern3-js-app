@@ -24,14 +24,20 @@ jobs:
     - name: Build the application
       run: npm run build
 
+    - name: Log in to Docker Hub
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
     - name: Build Docker image
       run: docker build -t intern3-js-app:latest .
 
     - name: Push Docker image to Docker Hub
-      env:
-        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-        DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      run: docker push intern3-js-app:latest
+
+    - name: Deploy to server
       run: |
-        echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-        docker tag intern3-js-app:latest ${{ secrets.DOCKER_HUB_USERNAME }}/intern3-js-app:latest
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/intern3-js-app:latest
+        docker pull intern3-js-app:latest
+        docker run -d -p 8080:8080 intern3-js-app:latest
+
